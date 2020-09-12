@@ -1,0 +1,2099 @@
+#:import Factory kivy.factory.Factory
+ScreenManager:
+    LogWindow:
+    CreateWindow:
+    CalcWindow:
+    SciCalcWindow:
+    ProCalcWindow:
+    VolumeWindow:
+    LengthWindow:
+    CreditsWindow:
+
+<Button1@Button>
+    font_name: "Symbola"
+    font_size: ((self.height+self.width)//2)*.25
+    background_normal: "static/btns/prmry_btns.png"
+    background_down: "static/btns/pressed_btns_calc.png"
+
+<Button3@Button>
+    font_name: "Symbola"
+    font_size: ((self.height+self.width)//2)*.25
+    background_normal: "static/btns/prmry_btns.png"
+    background_down: "static/btns/pressed_btns_calc.png"
+
+<Button4@ActionButton>
+    font_name: "Arial"
+    font_size: ((self.height+self.width)//2)*.20
+    background_color: 30/255,30/255,30/255,1
+
+<Button2@Button>
+    font_name: "Symbola"
+    font_size: ((self.height+self.width)//2)*.25
+    background_normal: "static/btns/scndry_btns.png"
+    background_down: "static/btns/pressed_btns_calc.png"
+
+<TextInput1@TextInput>
+    multiline: False
+    padding: [10, 5, 0, 0]
+    foreground_color: 1, 1, 1, 1
+    background_color: 0,0,0,0
+    background_normal: "static\imgs\text_input.png"
+    background_down: "static\imgs\text_input.png"
+
+<Spinner1@SpinnerOption>:
+    background_normal: "static/btns/btn_config_out_normal1.png"
+    background_down: "static/btns/btn_config_out_pressed2.png"
+    color: 235/255, 146/255, 234/255, 1
+    font_size: self.height*0.5
+    font_name: "Pixel"
+
+<Spinner2@SpinnerOption>:
+    font_name: "Symbola"
+    font_size: self.height*0.5
+    background_normal: "static/btns/scndry_btns.png"
+    background_down: "static/btns/pressed_btns_calc.png"
+
+#############################################################################################
+<LogWindow>
+    name: "log"
+    username: user
+    password: passw
+
+    canvas:
+        Color:
+            rgb: .4,.4,.4
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'static/imgs/login.jpg'
+
+    GridLayout:
+        cols: 2
+        spacing: 10
+        size_hint: 0.8, 0.15
+        pos_hint: {"x":0.12, "y":0.7}
+
+        Label:
+            text: "USERNAME  "
+            font_name: "Glitch"
+            color: 235/255, 146/255, 234/255, 1
+            font_size: 0.8*self.height
+
+        TextInput:
+            id: user
+            multiline: False
+            font_name: "Arial"
+            font_size: 0.48*self.height
+            padding: [10,4,0,0]
+
+        Label:
+            text: "PASSWORD  "
+            font_name: "Glitch"
+            color: 235/255, 146/255, 234/255, 1
+            font_size: 0.8*self.height
+
+        TextInput:
+            id: passw
+            password: True
+            multiline: False
+            font_name: "Arial"
+            font_size: 0.6*self.height if self.password == True else 0.48*self.height
+
+
+    Button:
+        text: "SUBMIT"
+        color: 193/255, 21/255, 90/255, .9
+        font_name: "Glitch"
+        font_size: 0.4*self.height
+        size_hint: 0.5, 0.2
+        pos_hint: {"x":0.264, "y":0}
+        background_normal: "static/imgs/log_btn.jpg"
+        background_down: "static/imgs/log_btn_pressed.jpg"
+        on_release:
+            root.manager.transition.direction = 'left'
+            root.manager.current = "calculator" if root.submitBtn() else "log"
+            user.text = ""
+            passw.text = ""
+
+    Button:
+        text: "CREATE ACCOUNT"
+        color: 235/255, 146/255, 234/255, 1
+        font_name: "Glitch"
+        font_size: 0.4*self.height
+        size_hint: 0.5, 0.1
+        pos_hint: {"x":0.25, "y":.85}
+        background_color: 0,0,0,0
+        on_release:
+            root.manager.transition.direction = 'right'
+            root.manager.current = "create"
+
+    Button:
+        id: bt1pass
+        text: "\u2690"
+        font_name: "Symbola"
+        color: 0/255, 0/255, 0/255, .9
+        font_size: self.height * 0.8
+        size_hint: 0.057, 0.057
+        pos_hint: {"x":0.924253, "y":.7036}
+        background_normal: "static/btns/btn_equal_normal.png"
+        background_down: "static/btns/btn_equal_downl.png"
+        on_press:
+            passw.password = False
+            self.text = "\u2691"
+        on_release:
+            passw.password = True
+            self.text = "\u2690"
+########################################################################################################################
+<CreateWindow>
+    name: "create"
+
+    namee: namee
+    user: user
+    password: passw
+
+    canvas:
+        Color:
+            rgb: .5,.5,.5
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'static/imgs/house.jpg'
+
+    GridLayout:
+        cols: 1
+        padding: 10
+        GridLayout:
+            cols: 1
+            spacing: 1
+            Label:
+                text: "SIGN IN"
+                font_name: "Glitch"
+                color: 242/255, 122/255, 255/255, 1
+                font_size: 0.4*self.height
+
+        GridLayout:
+            cols: 2
+            spacing: 10
+            padding: 10
+
+            Label:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0, "top":0.8}
+                text: "NAME"
+                font_name: "Glitch"
+                color: 200/255, 73/255, 222/255, 1
+                font_size: self.height * .7
+            TextInput:
+                pos_hint: {"x":0.5, "top":0.8}
+                size_hint: 0.4, 0.12
+                id: namee
+                multiline: False
+                font_size: self.height * .5
+            Label:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0, "top":0.8-0.13}
+                text: "USERNAME"
+                font_name: "Glitch"
+                color: 200/255, 73/255, 222/255, 1
+                font_size: self.height * .7
+            TextInput:
+                pos_hint: {"x":0.5, "top":0.8-0.13}
+                size_hint: 0.4, 0.12
+                id: user
+                multiline: False
+                font_size: self.height * .5
+            Label:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0, "top":0.8-0.13*2}
+                text: "PASSWORD"
+                font_name: "Glitch"
+                color: 200/255, 73/255, 222/255, 1
+                font_size: self.height * .7
+            TextInput:
+                pos_hint: {"x":0.5, "top":0.8-0.13*2}
+                size_hint: 0.4, 0.12
+                id: passw
+                multiline: False
+                password: True
+                font_size: self.height * .5
+
+        GridLayout:
+            cols: 1
+            spacing: 10
+            
+    Button:
+        text: "GO BACK"
+        pos_hint:{"x":0.325,"y":0.25}
+        size_hint: 0.35, 0.06
+        font_name: "Glitch"
+        font_size: 0.8*self.height
+        color: 200/255, 73/255, 222/255, 1
+        background_color: 0, 0, 0, 0
+        on_release:
+            root.manager.transition.direction = "left"
+            root.manager.current = "log"
+    Button:
+        text: "SUBMIT"
+        pos_hint:{"x":0.2,"y":0.018}
+        size_hint: 0.6, 0.15
+        color: 255/255, 150/255, 255/255, 1
+        font_name: "Glitch"
+        font_size: 0.65*self.height
+        background_normal: "static/btns/create_btn_normal.png"
+        background_down: "static/btns/create_btn_pressed.png"
+        on_release:
+            root.manager.transition.direction = "left"
+            root.submit()
+            namee.text = ""
+            user.text = ""
+            passw.text = ""
+
+########################################################################################################################
+<CalcWindow>
+    name: "calculator"
+    id: calculator
+    display: entry
+    operated: root.operated
+    dot: root.dot_bef
+    sign: root.sign_bef
+    canvas:
+        Color:
+            rgb: 30/255, 30/255, 30/255
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+##############################################
+##############################################
+    GridLayout:
+        cols: 1
+        rows: 8
+        padding: 2
+
+        GridLayout:
+            cols: 1
+
+            GridLayout:
+                cols:1
+                ActionBar:
+                    pos_hint: {'top':1}
+                    height: 62
+
+                    ActionView:
+                        use_separator: True
+
+                        ActionPrevious:
+                            title: ""
+                            with_previous: True
+                            app_icon: "static/icons/logout.png"
+                            on_release:
+                                entry.text =  "0"
+                                root.manager.current = "log"
+                                root.manager.transition.direction = 'right'
+
+                        ActionLabel:
+                            text: "Standard"
+                            important: True
+                            font_name: "Symbola"
+                            font_size: self.height *0.64
+                            color: 235/255, 146/255, 234/255, 1
+
+                        ActionGroup:
+                            text: '\u2261'
+                            font_name: "Symbola"
+                            dropdown_width: root.width * 0.3
+                            font_size: self.height * 0.64
+                            color: 235/255, 146/255, 234/255, 1
+                            Button4:
+                                text: 'Standard'
+
+                            Button4:
+                                text: 'Scientific'
+                                on_release:
+                                    entry.text =  "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "calculator_sci"
+
+                            Button4:
+                                text: 'Converter'
+                                on_release:
+                                    entry.text = "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "calculator_pro"
+
+                            Button4:
+                                text: 'Volume'
+                                on_release:
+                                    entry.text = "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "volume"
+
+
+                            Button4:
+                                text: 'Length'
+                                on_release:
+                                text: 'Volume'
+                                on_release:
+                                    entry.text = "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "length"
+
+                            Button4:
+                                text: 'Configure'
+                                on_release:
+                                    root.conf()
+                            Button4:
+                                text: 'About'
+                                on_release:
+                                    entry.text = "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "credits"
+
+##############################################
+##############################################
+            TextInput1:
+                id: entry
+                font_size: self.height* 0.7
+                text: "0"
+
+        GridLayout:
+            cols: 4
+            padding: 1
+            spacing: 2
+
+            Button2:
+                text: "MOD"
+                on_press:
+                    entry.text += "mod" if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+            Button2:
+                text: "%"
+                on_press:
+                    root.operated = True
+                    root.percentage(entry.text)
+
+            Button2:
+                text: "AC"
+                on_press:
+                    root.sign = False
+                    root.dot = False
+                    entry.text =  "0"
+
+            Button2:
+                text: "\u232B"
+                on_press:
+                    entry.text = entry.text[:(len(entry.text)) - 1] if entry.text!="0" else entry.text
+                    entry.text = "0" if entry.text == "" else entry.text
+                    root.sign = False
+                    root.dot = True
+
+            Button2:
+                text: "x\u00B2"
+                on_press:
+                    root.operated = True
+                    root.elevate_2(entry.text)
+
+            Button2:
+                text: "x\u00B3"
+                on_press:
+                    root.operated = True
+                    root.elevate_3(entry.text)
+
+            Button2:
+                text: "\u221A"
+                on_press:
+                    root.operated = True
+                    root.sqroot(entry.text)
+
+            Button2:
+                text: "\u00F7"
+                on_press:
+                    entry.text += self.text if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+##############################################
+##############################################
+        GridLayout:
+            cols: 4
+            padding: 1
+            spacing: 2
+
+            Button1:
+                text: "7"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "8"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "9"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button2:
+                text: "\u2A2F"
+                on_press:
+                    entry.text += "x" if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+            Button1:
+                text: "4"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "5"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "6"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button2:
+                text: "\u2212"
+                on_press:
+                    entry.text += self.text if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+##############################################
+##############################################
+        GridLayout:
+            cols: 4
+            padding: 1
+            spacing: 2
+
+            Button1:
+                text: "1"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "2"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "3"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button2:
+                text: "+"
+                on_press:
+                    entry.text += self.text if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+            Button1:
+                text: "-/+"
+                on_release:
+                    root.negate(entry.text)
+
+            Button1:
+                text: "0"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "."
+                on_press:
+                    entry.text += self.text if entry.text[len(entry.text)-1] != "." and "." not in entry.text and not root.dot and not root.sign else ""
+                    entry.text += "0." if root.sign and root.dot else ""
+                    entry.text += self.text if not root.sign and root.dot and entry.text[len(entry.text)-1] != "." else ""
+                    root.operated = False
+                    root.sign = False
+                    root.dot = False
+
+            Button:
+                font_name: "Symbola"
+                font_size: ((self.height+self.width)//2)*.25
+                text: "="
+                background_normal: "static/btns/btn_equal_normal.png"
+                background_down: "static/btns/btn_equal_downl.png"
+                on_press:
+                    root.operated = True
+                    root.sign = False
+                    root.dot = False
+                    calculator.calculate(entry.text)
+
+########################################################################################################################
+<SciCalcWindow>
+    name: "calculator_sci"
+    id: calculator_sci
+    display: entry
+    operated: root.operated
+    dot: root.dot_bef
+    sign: root.sign_bef
+    canvas:
+        Color:
+            rgb: 30/255, 30/255, 30/255
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+##############################################
+##############################################
+    GridLayout:
+        cols: 1
+        rows: 8
+        padding: 2
+
+        GridLayout:
+            cols: 1
+
+            GridLayout:
+                cols:1
+
+                ActionBar:
+                    pos_hint: {'top':1}
+                    height: 62
+
+                    ActionView:
+                        use_separator: True
+
+                        ActionPrevious:
+                            title: ""
+                            with_previous: True
+                            app_icon: "static/icons/logout.png"
+                            on_release:
+                                entry.text =  "0"
+                                root.manager.current = "log"
+                                root.manager.transition.direction = 'right'
+
+                        ActionLabel:
+                            text: "Scientific"
+                            important: True
+                            font_name: "Symbola"
+                            font_size: self.height *0.64
+                            color: 235/255, 146/255, 234/255, 1
+
+                        ActionGroup:
+                            text: '\u2261'
+                            font_name: "Symbola"
+                            dropdown_width: root.width * 0.3
+                            font_size: self.height * 0.65
+                            color: 235/255, 146/255, 234/255, 1
+
+                            Button4:
+                                text: 'Standard'
+                                on_release:
+                                    entry.text =  "0"
+                                    root.manager.transition.direction = "down"
+                                    root.manager.current = "calculator"
+
+                            Button4:
+                                text: 'Scientific'
+
+                            Button4:
+                                text: 'Converter'
+                                on_release:
+                                    entry.text =  "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "calculator_pro"
+
+                            Button4:
+                                text: 'Volume'
+                                on_release:
+                                    entry.text =  "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "volume"
+
+                            Button4:
+                                text: 'Length'
+                                on_release:
+                                    entry.text =  "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "length"
+
+                            Button4:
+                                text: 'Configure'
+                                on_release:
+                                    root.conf()
+                            Button4:
+                                text: 'About'
+                                on_release:
+                                    entry.text =  "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "credits"
+
+##############################################
+##############################################
+            TextInput1:
+                id: entry
+                font_size: self.height* 0.7
+                text: "0"
+
+        GridLayout:
+            cols: 5
+            padding: 1
+            spacing: 2
+
+            Button2:
+                text: "MOD"
+                on_press:
+                    entry.text += "mod" if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+            Button2:
+                text: "-/+"
+                on_release:
+                    root.negate(entry.text)
+
+            Button2:
+                text: "%"
+                on_press:
+                    root.operated = True
+                    root.percentage(entry.text)
+
+            Button2:
+                text: "x!"
+                on_press:
+                    root.operated = True
+                    root.factorial(entry.text)
+
+            Button2:
+                text: "x10\u207F"
+                on_press:
+                    entry.text += "x10^" if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+            Button2:
+                text: "\u221A"
+                on_press:
+                    root.operated = True
+                    root.sqroot(entry.text)
+
+            Button2:
+                text: "\u2223x\u2223"
+                on_press:
+                    root.absolute(entry.text)
+
+            Button2:
+                text: "("
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button2:
+                text: ")"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button2:
+                text: "x\u207F"
+                on_press:
+                    entry.text += "^" if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+##############################################
+##############################################
+        GridLayout:
+            cols: 5
+            padding: 1
+            spacing: 2
+
+            Button1:
+                text: "7"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "8"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "9"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button2:
+                text: "AC"
+                on_press:
+                    root.sign = False
+                    root.dot = False
+                    entry.text =  "0"
+
+            Button2:
+                text: "\u232B"
+                on_press:
+                    entry.text = entry.text[:(len(entry.text)) - 1] if entry.text!="0" else entry.text
+                    entry.text = "0" if entry.text == "" else entry.text
+                    root.sign = False
+                    root.dot = True
+
+            Button1:
+                text: "4"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "5"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "6"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button2:
+                text: "\u2A2F"
+                on_press:
+                    entry.text += "x" if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+            Button2:
+                text: "\u00F7"
+                on_press:
+                    entry.text += self.text if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+##############################################
+##############################################
+        GridLayout:
+            cols: 5
+            padding: 1
+            spacing: 2
+
+            Button1:
+                text: "1"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "2"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "3"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button2:
+                text: "+"
+                on_press:
+                    entry.text += self.text if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+            Button2:
+                text: "\u2212"
+                on_press:
+                    entry.text += self.text if not root.sign else ""
+                    root.sign = True
+                    root.dot = True
+                    root.operated = False
+
+            Button1:
+                text: "0"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.operated == True else entry.text
+                    entry.text += self.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "."
+                on_press:
+                    entry.text += self.text if entry.text[len(entry.text)-1] != "." and "." not in entry.text and not root.dot and not root.sign else ""
+                    entry.text += "0." if root.sign and root.dot else ""
+                    entry.text += self.text if not root.sign and root.dot and entry.text[len(entry.text)-1] != "." else ""
+                    root.operated = False
+                    root.sign = False
+                    root.dot = False
+
+            Button1:
+                text: "\u03C0"
+                on_press:
+                    entry.text += "3.1415" if root.sign else ""
+                    entry.text = "3.1415" if entry.text  == "0" or not root.sign and "3.1415" not in entry.text else entry.text
+                    root.sign = False
+                    root.operated = False
+
+            Button1:
+                text: "\u212E"
+                on_press:
+                    entry.text += "2.7182" if root.sign else ""
+                    entry.text = "2.7182" if entry.text  == "0" or not root.sign and "2.7182" not in entry.text else entry.text
+                    root.sign = False
+                    root.operated = False
+
+            Button:
+                font_name: "Symbola"
+                font_size: ((self.height+self.width)//2)*.25
+                text: "="
+                background_normal: "static/btns/btn_equal_normal.png"
+                background_down: "static/btns/btn_equal_downl.png"
+                on_press:
+                    root.operated = True
+                    root.sign = False
+                    root.dot = False
+                    calculator_sci.calculate(entry.text)
+
+########################################################################################################################
+<ProCalcWindow>
+    name: "calculator_pro"
+    id: calculator_pro
+    display: entry
+    op: root.op
+    num_bin: root.num_bin
+    num_oct: root.num_oct
+    num_dec: root.num_dec
+    num_hex: root.num_hex
+    canvas:
+        Color:
+            rgb: 30/255, 30/255, 30/255
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+##############################################
+##############################################
+    GridLayout:
+        cols: 1
+        rows: 8
+        padding: 2
+
+        GridLayout:
+            cols: 1
+
+            GridLayout:
+                cols:1
+
+                ActionBar:
+                    pos_hint: {'top':1}
+                    height: 62
+
+                    ActionView:
+                        use_separator: True
+
+                        ActionPrevious:
+                            title: ""
+                            with_previous: True
+                            app_icon: "static/icons/logout.png"
+                            on_release:
+                                entry.text =  "0"
+                                root.manager.current = "log"
+                                root.manager.transition.direction = 'right'
+
+                        ActionLabel:
+                            text: "Converter"
+                            important: True
+                            font_name: "Symbola"
+                            font_size: self.height *0.6
+                            color: 235/255, 146/255, 234/255, 1
+
+                        ActionGroup:
+                            text: '\u2261'
+                            font_name: "Symbola"
+                            dropdown_width: root.width * 0.3
+                            font_size: self.height * 0.6
+                            color: 235/255, 146/255, 234/255, 1
+
+                            Button4:
+                                text: 'Standard'
+                                on_release:
+                                    entry.text = "0"
+                                    bina.text = "0"
+                                    octa.text = "0"
+                                    deci.text = "0"
+                                    hexa.text = "0"
+                                    root.manager.transition.direction = "down"
+                                    root.manager.current = "calculator"
+
+                            Button4:
+                                text: 'Scientific'
+                                on_release:
+                                    entry.text = "0"
+                                    bina.text = "0"
+                                    octa.text = "0"
+                                    deci.text = "0"
+                                    hexa.text = "0"
+                                    root.manager.transition.direction = "down"
+                                    root.manager.current = "calculator_sci"
+
+                            Button4:
+                                text: 'Converter'
+
+                            Button4:
+                                text: 'Volume'
+                                on_release:
+                                    entry.text = "0"
+                                    bina.text = "0"
+                                    octa.text = "0"
+                                    deci.text = "0"
+                                    hexa.text = "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "volume"
+
+                            Button4:
+                                text: 'Length'
+                                on_release:
+                                    entry.text = "0"
+                                    bina.text = "0"
+                                    octa.text = "0"
+                                    deci.text = "0"
+                                    hexa.text = "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "length"
+
+                            Button4:
+                                text: 'Configure'
+                                on_release:
+                                    root.conf()
+                            Button4:
+                                text: 'About'
+                                on_release:
+                                    entry.text = "0"
+                                    bina.text = "0"
+                                    octa.text = "0"
+                                    deci.text = "0"
+                                    hexa.text = "0"
+                                    root.manager.transition.direction = "up"
+                                    root.manager.current = "credits"
+
+##############################################
+##############################################
+            TextInput1:
+                id: entry
+                font_size: self.height* 0.7
+                text: "0"
+
+        GridLayout:
+            cols: 4
+            padding: 1
+            spacing: 2
+
+            Button2:
+                text: "HEX"
+                on_press:
+                    entry.text = "0"
+                    root.op = self.text
+                    data_type.text = "Hexadecimal"
+                    let_a.text = "A"
+                    let_b.text = "B"
+                    let_c.text = "C"
+                    let_d.text = "D"
+                    let_e.text = "E"
+                    let_f.text = "F"
+                    nine.text = "9"
+                    eight.text = "8"
+                    seven.text = "7"
+                    six.text = "6"
+                    five.text = "5"
+                    four.text = "4"
+                    three.text = "3"
+                    two.text = "2"
+
+            TextInput1:
+                id: hexa
+                text: root.num_hex
+                font_name: "Symbola"
+                font_size: ((self.height+self.width)//2)*.3
+                padding: [5, 10, 0, 0]
+
+            Label:
+                id: data_type
+                text: "Decimal"
+                font_size: ((self.height+self.width)//2)*.24
+                font_name: "Symbola"
+
+            Button:
+                text: "\u27a1"
+                font_name: "Symbola"
+                font_size: self.height*.8
+                background_normal: "static/btns/btn_equal_normal.png"
+                background_down: "static/btns/btn_equal_downl.png"
+                on_press:
+                    bina.text = entry.text if root.op =="BIN" else bina.text
+                    octa.text = root.binary_o(entry.text) if root.op =="BIN" else octa.text
+                    deci.text = root.binary_d(entry.text) if root.op =="BIN" else deci.text
+                    hexa.text = root.binary_h(entry.text) if root.op =="BIN" else hexa.text
+
+                    bina.text = root.octal_b(entry.text) if root.op =="OCT" else bina.text
+                    octa.text = entry.text if root.op =="OCT" else octa.text
+                    deci.text = root.octal_d(entry.text) if root.op =="OCT" else deci.text
+                    hexa.text = root.octal_h(entry.text) if root.op =="OCT" else hexa.text
+
+                    bina.text = root.decimal_b(entry.text) if root.op =="DEC" else bina.text
+                    octa.text = root.decimal_o(entry.text) if root.op =="DEC" else octa.text
+                    deci.text = entry.text if root.op =="DEC" else deci.text
+                    hexa.text = root.decimal_h(entry.text) if root.op =="DEC" else hexa.text
+
+                    bina.text = root.hexa_b(entry.text) if root.op =="HEX" else bina.text
+                    octa.text = root.hexa_o(entry.text) if root.op =="HEX" else octa.text
+                    deci.text = root.hexa_d(entry.text) if root.op =="HEX" else deci.text
+                    hexa.text = entry.text if root.op =="HEX" else hexa.text
+
+                    entry.text = "0"
+
+            Button2:
+                text: "DEC"
+                on_press:
+                    entry.text = "0"
+                    root.op = self.text
+                    data_type.text = "Decimal"
+                    let_a.text = ""
+                    let_b.text = ""
+                    let_c.text = ""
+                    let_d.text = ""
+                    let_e.text = ""
+                    let_f.text = ""
+                    nine.text = "9"
+                    eight.text = "8"
+                    seven.text = "7"
+                    six.text = "6"
+                    five.text = "5"
+                    four.text = "4"
+                    three.text = "3"
+                    two.text = "2"
+
+            TextInput1:
+                id: deci
+                text: root.num_dec
+                font_name: "Symbola"
+                font_size: ((self.height+self.width)//2)*.3
+                padding: [5, 10, 0, 0]
+
+            Button2:
+                id: let_a
+                text: ""
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button2:
+                id: let_b
+                text: ""
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button2:
+                text: "OCT"
+                on_press:
+                    entry.text = "0"
+                    root.op = self.text
+                    data_type.text = "Octal"
+                    let_a.text = ""
+                    let_b.text = ""
+                    let_c.text = ""
+                    let_d.text = ""
+                    let_e.text = ""
+                    let_f.text = ""
+                    nine.text = ""
+                    eight.text = ""
+                    seven.text = "7"
+                    six.text = "6"
+                    five.text = "5"
+                    four.text = "4"
+                    three.text = "3"
+                    two.text = "2"
+
+            TextInput1:
+                id: octa
+                text: root.num_oct
+                font_name: "Symbola"
+                font_size: ((self.height+self.width)//2)*.3
+                padding: [5, 10, 0, 0]
+
+            Button2:
+                id: let_c
+                text: ""
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button2:
+                id: let_d
+                text: ""
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button2:
+                text: "BIN"
+                on_press:
+                    entry.text = "0"
+                    root.op = self.text
+                    data_type.text = "Binary"
+                    let_a.text = ""
+                    let_b.text = ""
+                    let_c.text = ""
+                    let_d.text = ""
+                    let_e.text = ""
+                    let_f.text = ""
+                    nine.text = ""
+                    eight.text = ""
+                    seven.text = ""
+                    six.text = ""
+                    five.text = ""
+                    four.text = ""
+                    three.text = ""
+                    two.text = ""
+
+            TextInput1:
+                id: bina
+                text: root.num_bin
+                foreground_color: 1, 1, 1, 1
+                font_name: "Symbola"
+                font_size: ((self.height+self.width)//2)*.3 if len(self.text) <= 8 else ((self.height+self.width)//2)*.24
+                padding: [5, 10, 0, 0]
+
+            Button2:
+                id: let_e
+                text: ""
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button2:
+                id: let_f
+                text: ""
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+##############################################
+##############################################
+        GridLayout:
+            cols: 4
+            padding: 1
+            spacing: 2
+
+            Button1:
+                id: seven
+                text: "7"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button1:
+                id: eight
+                text: "8"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button1:
+                id: nine
+                text: "9"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button2:
+                text: "AC"
+                on_press:
+                    entry.text =  "0"
+                    bina.text = "0"
+                    octa.text = "0"
+                    deci.text = "0"
+                    hexa.text = "0"
+
+            Button1:
+                id: four
+                text: "4"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button1:
+                id: five
+                text: "5"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button1:
+                id: six
+                text: "6"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button2:
+                text: "\u232B"
+                on_press:
+                    entry.text = entry.text[:(len(entry.text)) - 1] if entry.text!="0" else entry.text
+                    entry.text = "0" if entry.text == "" else entry.text
+
+            Button1:
+                text: "1"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button1:
+                id: two
+                text: "2"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Button1:
+                id: three
+                text: "3"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+            Label:
+            Label:
+
+            Button1:
+                text: "0"
+                on_press:
+                    entry.text = "" if entry.text == "0" else entry.text
+                    entry.text += self.text
+
+########################################################
+<VolumeWindow>
+    name: "volume"
+    id: volume
+    display: entry2
+    op1: "Cubic meters"
+    op2: "Cubic meters"
+    converted: False
+
+    canvas:
+        Color:
+            rgb: 30/255, 30/255, 30/255
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    GridLayout:
+        cols: 1
+
+        GridLayout:
+            cols: 1
+            padding: 1
+            spacing: 2
+
+            ActionBar:
+                pos_hint: {'top':1}
+                height: 62
+                ActionView:
+                    use_separator: True
+                    ActionPrevious:
+                        title: ""
+                        with_previous: True
+                        app_icon: "static/icons/logout.png"
+                        on_release:
+                            entry.text =  "0"
+                            root.manager.current = "log"
+                            root.manager.transition.direction = 'right'
+                    ActionLabel:
+                        text: "Volume"
+                        important: True
+                        font_name: "Symbola"
+                        font_size: self.height *0.6
+                        color: 235/255, 146/255, 234/255, 1
+                    ActionGroup:
+                        text: '\u2261'
+                        font_name: "Symbola"
+                        dropdown_width: root.width * 0.3
+                        font_size: self.height * 0.6
+                        color: 235/255, 146/255, 234/255, 1
+                        Button4:
+                            text: 'Standard'
+                            on_release:
+                                entry.text = "0"
+                                entry2.text = "0"
+                                root.manager.transition.direction = "down"
+                                root.manager.current = "calculator"
+                        Button4:
+                            text: 'Scientific'
+                            on_release:
+                                entry.text = "0"
+                                entry2.text = "0"
+                                root.manager.transition.direction = "down"
+                                root.manager.current = "calculator_sci"
+                        Button4:
+                            text: 'Converter'
+                            on_release:
+                                entry.text = "0"
+                                entry2.text = "0"
+                                root.manager.transition.direction = "down"
+                                root.manager.current = "calculator_pro"
+                        Button4:
+                            text: 'Volume'
+                            on_release:
+                        Button4:
+                            text: 'Length'
+                            on_release:
+                                entry.text = "0"
+                                entry2.text = "0"
+                                root.manager.transition.direction = "up"
+                                root.manager.current = "length"
+                        Button4:
+                            text: 'Configure'
+                            on_release:
+                                root.conf()
+                        Button4:
+                            text: 'About'
+                            on_release:
+                                entry.text = "0"
+                                entry2.text = "0"
+                                root.manager.transition.direction = "up"
+                                root.manager.current = "credits"
+
+##############################################
+##############################################
+            TextInput1:
+                id: entry
+                font_size: self.height* 0.7
+                text: "0"
+
+            GridLayout:
+                cols: 2
+                Spinner:
+                    id: result1
+                    text: "Cubic meters"
+                    background_normal: "static/btns/converter_btns.png"
+                    background_down: "static/btns/pressed_btns_calc.png"
+                    font_size: self.height*0.525
+                    font_name: "Symbola"
+                    on_text:
+                        root.op1= self.text
+                    values: ["Milliliters", "Litters", "Cubic centimeters", "Cubic meters"]
+                    sync_height: True
+                    option_cls: Factory.get("Spinner2")
+                Label:
+
+            TextInput1:
+                id: entry2
+                font_size: self.height* 0.7
+                text: "0"
+
+            GridLayout:
+                cols: 2
+                Spinner:
+                    id: result2
+                    text: "Cubic meters"
+                    background_normal: "static/btns/converter_btns.png"
+                    background_down: "static/btns/pressed_btns_calc.png"
+                    font_size: self.height*0.525
+                    font_name: "Symbola"
+                    on_text:
+                        root.op2= self.text
+                    values: ["Milliliters", "Litters", "Cubic centimeters", "Cubic meters"]
+                    sync_height: True
+                    option_cls: Factory.get("Spinner2")
+                Label:
+
+##############################################
+##############################################
+        GridLayout:
+            cols: 3
+            padding: 1
+            spacing: 2
+
+            Label:
+            Button2:
+                text: "AC"
+                on_press:
+                    entry.text =  "0"
+                    entry2.text =  "0"
+                    root.converted = False
+            Button2:
+                text: "\u232B"
+                on_press:
+                    entry.text = entry.text[:(len(entry.text)) - 1] if entry.text!="0" else entry.text
+                    entry.text = "0" if entry.text == "" else entry.text
+
+            Button1:
+                text: "7"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "8"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "9"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "4"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "5"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "6"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "1"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "2"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "3"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+            Label:
+            Button1:
+                text: "0"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "."
+                on_press:
+                    entry.text = "0." if root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text if "." not in entry.text else ""
+    Button:
+        text: "="
+        font_name: "Symbola"
+        font_size: self.height*.8
+        size_hint: 0.3285, 0.1
+        pos_hint: {"x":0.67, "y":.50125}
+        background_normal: "static/btns/btn_equal_normal.png"
+        background_down: "static/btns/btn_equal_downl.png"
+        on_press:
+            root.converted = True
+            root.conversion(entry.text, root.op1, root.op2)
+
+###############################################################
+<LengthWindow>
+    name: "length"
+    id: length
+    display: entry2
+    op1: "Meters"
+    op2: "Meters"
+    converted: False
+
+    canvas:
+        Color:
+            rgb: 30/255, 30/255, 30/255
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    GridLayout:
+        cols: 1
+
+        GridLayout:
+            cols: 1
+            padding: 1
+            spacing: 2
+
+            ActionBar:
+                pos_hint: {'top':1}
+                height: 62
+                ActionView:
+                    use_separator: True
+                    ActionPrevious:
+                        title: ""
+                        with_previous: True
+                        app_icon: "static/icons/logout.png"
+                        on_release:
+                            entry.text =  "0"
+                            root.manager.current = "log"
+                            root.manager.transition.direction = 'right'
+                    ActionLabel:
+                        text: "Volume"
+                        important: True
+                        font_name: "Symbola"
+                        font_size: self.height *0.6
+                        color: 235/255, 146/255, 234/255, 1
+                    ActionGroup:
+                        text: '\u2261'
+                        font_name: "Symbola"
+                        dropdown_width: root.width * 0.3
+                        font_size: self.height * 0.6
+                        color: 235/255, 146/255, 234/255, 1
+                        Button4:
+                            text: 'Standard'
+                            on_release:
+                                entry.text = "0"
+                                entry2.text = "0"
+                                root.manager.transition.direction = "down"
+                                root.manager.current = "calculator"
+
+                        Button4:
+                            text: 'Scientific'
+                            on_release:
+                                entry.text = "0"
+                                entry2.text = "0"
+                                root.manager.transition.direction = "down"
+                                root.manager.current = "calculator_sci"
+
+                        Button4:
+                            text: 'Converter'
+                            on_release:
+                                entry.text = "0"
+                                entry2.text = "0"
+                                root.manager.transition.direction = "down"
+                                root.manager.current = "calculator_pro"
+
+                        Button4:
+                            text: 'Volume'
+                            on_release:
+                                root.manager.transition.direction = "down"
+                                root.manager.current = "volume"
+                        Button4:
+                            text: 'Length'
+
+                        Button4:
+                            text: 'Configure'
+                            on_release:
+                                root.conf()
+
+                        Button4:
+                            text: 'About'
+                            on_release:
+                                entry.text = "0"
+                                entry2.text = "0"
+                                root.manager.transition.direction = "up"
+                                root.manager.current = "credits"
+
+##############################################
+##############################################
+            TextInput1:
+                id: entry
+                font_size: self.height* 0.7
+                text: "0"
+
+            GridLayout:
+                cols: 2
+                Spinner:
+                    id: result1
+                    text: "Meters"
+                    background_normal: "static/btns/converter_btns.png"
+                    background_down: "static/btns/pressed_btns_calc.png"
+                    font_size: self.height*0.525
+                    font_name: "Symbola"
+                    on_text:
+                        root.op1= self.text
+                    values: ["Millimeters", "Centimeters", "Meters", "Kilometers", "Inches", "Feet"]
+                    sync_height: True
+                    option_cls: Factory.get("Spinner2")
+                Label:
+
+            TextInput1:
+                id: entry2
+                font_size: self.height* 0.7
+                text: "0"
+
+            GridLayout:
+                cols: 2
+                Spinner:
+                    id: result2
+                    text: "Meters"
+                    background_normal: "static/btns/converter_btns.png"
+                    background_down: "static/btns/pressed_btns_calc.png"
+                    font_size: self.height*0.525
+                    font_name: "Symbola"
+                    on_text:
+                        root.op2= self.text
+                    values: ["Millimeters", "Centimeters", "Meters", "Kilometers", "Inches", "Feet"]
+                    sync_height: True
+                    option_cls: Factory.get("Spinner2")
+                Label:
+
+##############################################
+##############################################
+        GridLayout:
+            cols: 3
+            padding: 1
+            spacing: 2
+
+            Label:
+            Button2:
+                text: "AC"
+                on_press:
+                    entry.text =  "0"
+                    entry2.text =  "0"
+                    root.converted = False
+            Button2:
+                text: "\u232B"
+                on_press:
+                    entry.text = entry.text[:(len(entry.text)) - 1] if entry.text!="0" else entry.text
+                    entry.text = "0" if entry.text == "" else entry.text
+
+            Button1:
+                text: "7"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "8"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "9"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "4"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "5"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "6"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "1"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "2"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "3"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+            Label:
+            Button1:
+                text: "0"
+                on_press:
+                    entry.text = "" if entry.text == "0" or root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text
+
+            Button1:
+                text: "."
+                on_press:
+                    entry.text = "0." if root.converted else entry.text
+                    entry2.text = "0" if root.converted else entry2.text
+                    root.converted = False
+                    entry.text += self.text if "." not in entry.text else ""
+    Button:
+        text: "="
+        font_name: "Symbola"
+        font_size: self.height*.8
+        size_hint: 0.3285, 0.1
+        pos_hint: {"x":0.67, "y":.50125}
+        background_normal: "static/btns/btn_equal_normal.png"
+        background_down: "static/btns/btn_equal_downl.png"
+        on_press:
+            root.converted = True
+            root.conversion(entry.text, root.op1, root.op2)
+#######################################################################################################################
+<CreditsWindow>
+    name: "credits"
+    id: credits
+
+    canvas:
+        Color:
+            rgb: .4,.4,.4
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'static/imgs/temple.jpg'
+    GridLayout:
+        cols: 1
+        GridLayout:
+            cols: 1
+            GridLayout:
+                cols:3
+                Label:
+                Label:
+                    color: 1,160/255,1,1
+                    text: "ABOUT CALCULATOR"
+                    font_name: "Glitch"
+                    font_size: self.height * .23
+                Label:
+            GridLayout:
+                cols:2
+                Label:
+                    color: 1,190/255,1,1
+                    text: "Version 1.0"
+                    font_name: "Symbola"
+                    font_size: self.height * .15
+                Label:
+                    color: 1,190/255,1,1
+                    text: "Platform: "+ root.sys_version
+                    font_name: "Symbola"
+                    font_size: self.height * .15
+            GridLayout:
+                cols: 1
+                Label:
+
+            GridLayout:
+                cols: 3
+                spacing: 5
+                padding: 10
+                Button:
+                    text: "Standard"
+                    font_name: "Symbola"
+                    font_size: self.height *0.6
+                    background_normal: "static/btns/btns_about.png"
+                    background_down: "static/btns/btns_about_pressed.png"
+                    on_release:
+                        root.manager.current = "calculator"
+                        root.manager.transition.direction = 'down'
+
+                Button:
+                    text: "Scientific"
+                    font_name: "Symbola"
+                    font_size: self.height *0.6
+                    background_normal: "static/btns/btns_about.png"
+                    background_down: "static/btns/btns_about_pressed.png"
+                    on_release:
+                        root.manager.current = "calculator_sci"
+                        root.manager.transition.direction = 'down'
+
+                Button:
+                    text: "Converter"
+                    font_name: "Symbola"
+                    font_size: self.height *0.6
+                    background_normal: "static/btns/btns_about.png"
+                    background_down: "static/btns/btns_about_pressed.png"
+                    on_release:
+                        root.manager.current = "calculator_pro"
+                        root.manager.transition.direction = 'down'
+
+                Button:
+                    text: "Volume"
+                    font_name: "Symbola"
+                    font_size: self.height *0.6
+                    background_normal: "static/btns/btns_about.png"
+                    background_down: "static/btns/btns_about_pressed.png"
+                    on_release:
+                        root.manager.current = "volume"
+                        root.manager.transition.direction = 'down'
+
+                Button:
+                    text: "Length"
+                    font_name: "Symbola"
+                    font_size: self.height *0.6
+                    background_normal: "static/btns/btns_about.png"
+                    background_down: "static/btns/btns_about_pressed.png"
+                    on_release:
+                        root.manager.current = "length"
+                        root.manager.transition.direction = 'down'
+
+                Button:
+                    text: "Config"
+                    font_name: "Symbola"
+                    font_size: self.height *0.6
+                    background_normal: "static/btns/btns_about.png"
+                    background_down: "static/btns/btns_about_pressed.png"
+                    on_release:
+                        root.conf()
+
+                Label:
+
+                Button:
+                    background_normal: "static/btns/btns_about.png"
+                    background_down: "static/btns/btns_about_pressed.png"
+                    text: "Log out"
+                    font_name: "Symbola"
+                    font_size: self.height *0.6
+                    on_release:
+                        root.manager.current = "log"
+                        root.manager.transition.direction = 'right'
+
+    Label:
+        color: 1,190/255,1,1
+        text: root.message
+        font_name: "Arial"
+        font_size: self.height * .04
+        pos_hint: {"x":0, "y":-0.05}
+    Label:
+        color: 1,190/255,1,1
+        text: root.sign
+        font_name: "Arial"
+        font_size: self.height * .03
+        pos_hint: {"x":0.23, "y":-0.2}
+
+
+#######################################################################################################################
+<Configuration>:
+    canvas:
+        Color:
+            rgb: .6,.6,.6
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'static/imgs/river.jpg'
+
+    Label:
+        text: "Set screen configuration"
+        font_size: self.height * 0.08
+        font_name: "Pixel"
+        pos_hint: {"x":0, "top":1.4}
+        color: 235/255, 146/255, 234/255, 1
+    Spinner:
+        id: win_size
+        text: "400x500"
+        color: 235/255, 146/255, 234/255, 1
+        background_normal: "static/btns/btn_config_out_normal1.png"
+        background_down: "static/btns/btn_config_out_pressed2.png"
+        font_size: self.height*0.6
+        size_hint: 0.3, 0.1
+        font_name: "Pixel"
+        pos_hint:{'center_x':.5, 'top': .8}
+        on_text: root.set_s(win_size.text)
+        values: ["400x600", "600x800", "800x900"]
+        sync_height: True
+        option_cls: Factory.get("Spinner1")
+
+    Button:
+        font_size: 0.7 * self.height
+        color: 235/255, 146/255, 234/255, 1
+        text: "Go Back"
+        font_name: "Pixel"
+        size_hint: 0.3, 0.1
+        pos_hint: {"x":0.35, "y":0.1}
+        on_release: root.close()
+        background_normal: "static/btns/btn_config_out_normal.png"
+        background_down: "static/btns/btn_config_out_pressed.png"
+
+<A_Error>:
+    canvas:
+        Color:
+            rgb: .6,.6,.6
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'static/imgs/bg.jpg'
+
+    Label:
+        text: "Invalid user or password"
+        color: 1, 190/255, 1, 1
+        font_name: "Symbola"
+        font_size: self.height *0.3 if root.width >= 600 else self.height *0.5
+        pos_hint: {"x":0, "y":.05}
+
+    Button:
+        text: "\u2A2F"
+        color: 1, 190/255, 1, 1
+        font_name: "Symbola"
+        font_size: self.height *1.1 if root.width >= 600 else self.height *1.5
+        size_hint: (0.11, 0.39)
+        background_color: 0,0,0,0
+        pos_hint: {"x":0.9, "y":0.98} if root.width >= 600 else {"x":0.9, "y":1.22}
+        on_press:
+            root.close()
+
+<Invalid_Form>:
+    canvas:
+        Color:
+            rgb: .6,.6,.6
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'static/imgs/bg.jpg'
+
+    Label:
+        text: "Please fill in the blanks in order \nto submit the form"
+        color: 1, 190/255, 1, 1
+        font_name: "Symbola"
+        font_size: self.height *0.3 if root.width >= 600 else self.height *0.37
+        pos_hint: {"x":0, "y":0}
+
+    Button:
+        text: "\u2A2F"
+        color: 1, 190/255, 1, 1
+        font_name: "Symbola"
+        font_size: self.height *1.1 if root.width >= 600 else self.height *1.5
+        size_hint: (0.11, 0.39)
+        background_color: 0,0,0,0
+        pos_hint: {"x":0.9, "y":0.98} if root.width >= 600 else {"x":0.9, "y":1.22}
+        on_press:
+            root.close()
+
+<Invalid_Password>:
+    canvas:
+        Color:
+            rgb: .6,.6,.6
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'static/imgs/bg.jpg'
+
+    Label:
+        text: "Password length should be at \nleast 6 characters"
+        color: 1, 190/255, 1, 1
+        font_name: "Symbola"
+        font_size: self.height *0.3 if root.width >= 600 else self.height *0.4
+        pos_hint: {"x":0, "y":0}
+
+    Button:
+        text: "\u2A2F"
+        color: 1, 190/255, 1, 1
+        font_name: "Symbola"
+        font_size: self.height *1.1 if root.width >= 600 else self.height *1.5
+        size_hint: (0.11, 0.39)
+        background_color: 0,0,0,0
+        pos_hint: {"x":0.9, "y":0.98} if root.width >= 600 else {"x":0.9, "y":1.22}
+        on_press:
+            root.close()
